@@ -36,6 +36,73 @@ new_melons = {
     }
 }
 
+sellable_melons = {
+    "melon1": {
+        "melon_type": "yw",
+        "shape_rating": 8,
+        "color_rating": 7,
+        "harvest_field": 2,
+        "harvest_by": "Sheila"
+    },
+    "melon2": {
+        "melon_type": "yw",
+        "shape_rating": 3,
+        "color_rating": 4,
+        "harvest_field": 2,
+        "harvest_by": "Sheila"
+    },
+    "melon3": {
+        "melon_type": "yw",
+        "shape_rating": 9,
+        "color_rating": 8,
+        "harvest_field": 3,
+        "harvest_by": "Sheila"
+    },
+    "melon4": {
+        "melon_type": "cas",
+        "shape_rating": 10,
+        "color_rating": 6,
+        "harvest_field": 35,
+        "harvest_by": "Sheila"
+    },
+    "melon5": {
+        "melon_type": "cren",
+        "shape_rating": 8,
+        "color_rating": 9,
+        "harvest_field": 35,
+        "harvest_by": "Michael"
+    },
+    "melon6": {
+        "melon_type": "cren",
+        "shape_rating": 8,
+        "color_rating": 2,
+        "harvest_field": 35,
+        "harvest_by": "Michael"
+    },
+    "melon7": {
+        "melon_type": "cren",
+        "shape_rating": 2,
+        "color_rating": 3,
+        "harvest_field": 4,
+        "harvest_by": "Michael"
+    },
+    "melon8": {
+        "melon_type": "musk",
+        "shape_rating": 6,
+        "color_rating": 7,
+        "harvest_field": 4,
+        "harvest_by": "Michael"
+    },
+    "melon9": {
+        "melon_type": "yw",
+        "shape_rating": 7,
+        "color_rating": 10,
+        "harvest_field": 3,
+        "harvest_by": "Sheila"
+    }
+}
+
+
 class MelonType(object):
     """A species of melon at a melon farm."""
 
@@ -101,18 +168,64 @@ def make_melon_type_lookup(melon_types):
 class Melon(object):
     """A melon in a melon harvest."""
 
-    # Fill in the rest
-    # Needs __init__ and is_sellable methods
+    def __init__(self, melon_type, shape_rating, color_rating, harvest_field,
+        harvest_by, name):
+        """Initialize harvested melon attributes"""
+        self.melon_type = melon_type
+        self.shape_rating = shape_rating
+        self.color_rating = color_rating
+        self.harvest_field = harvest_field
+        self.harvest_by = harvest_by
+        self.is_sellable = None
+        self.name = name
+
+    def is_sellable(self):
+        """ Check whether color rating & shape rating >5, did not come from field 3"""
+        if self.shape_rating > 5 and self.color_rating > 5 and self.harvest_field != 3:
+            self.is_sellable = True
+        else:
+            self.is_sellable = False
+
 
 def make_melons(melon_types):
     """Returns a list of Melon objects."""
 
-    # Fill in the rest
+    sellable_list = []
 
-def get_sellability_report(melons):
+    for item in melon_types:
+            merchandise = Melon(sellable_melons[item]["melon_type"],
+                                sellable_melons[item]["shape_rating"],
+                                sellable_melons[item]["color_rating"],
+                                sellable_melons[item]["harvest_field"],
+                                sellable_melons[item]["harvest_by"],
+                                item)
+            sellable_list.append(merchandise)
+
+    return sellable_list
+
+
+def get_sellability_report():
     """Given a list of melon object, prints whether each one is sellable."""
 
-    # Fill in the rest
-melon_list = make_melon_types(new_melons)
+    melon_list = make_melons(sellable_melons)
+
+    print "Sellable Melons:"
+    for item in melon_list:
+        if item.is_sellable:
+            print item.name
+            print item.harvest_by
+            print item.harvest_field
+            print
+
+    print "\n\nMelons That Are NOT Sellable:"
+    for item in melon_list:
+        if not item.is_sellable:
+            print item.name
+            print item.harvest_by
+            print item.harvest_field
+            print
+
+# melon_list = make_melon_types(new_melons)
+get_sellability_report()
 
 
