@@ -1,6 +1,7 @@
 ############
-# Part 1   #
+# Melon Data #
 ############
+
 new_melons = {
     "muskmelon": {
         "code": "musk",
@@ -161,9 +162,9 @@ def make_melon_type_lookup(melon_types):
 
     return melon_dict
 
-############
-# Part 2   #
-############
+###########################
+# Defining a melon object #
+###########################
 
 class Melon(object):
     """A melon in a melon harvest."""
